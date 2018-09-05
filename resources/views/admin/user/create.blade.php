@@ -30,18 +30,19 @@
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="password">Password</label>
+                        <label for="password">{{__('Password')}}</label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                         @if($errors->has('password'))
                             <div class="alert-danger">{{ $errors->first('password') }}</div>
                         @endif
                     </div>
                     <div class="form-group">
-                        <label for="confirm_password">Password</label>
+                        <label for="confirm_password">{{__('Repeat Password')}}</label>
                         <input type="password" class="form-control" id="confirm_password" name="password_confirmation" placeholder="Repeat Password">
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <div class="form-group">
+                        <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
+                    </div>
                 </form>
             </div>
         </div>

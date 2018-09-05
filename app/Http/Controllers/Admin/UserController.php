@@ -56,7 +56,7 @@ class UserController extends Controller
         try {
             $this->userRepository->create([
                 'name' => $request->getName(),
-                'last_name' =>$request->getLastName(),
+                'last_name' => $request->getLastName(),
                 'email' => $request->getEmail(),
                 'password' => bcrypt($request->getPassword())
             ]);
@@ -64,7 +64,7 @@ class UserController extends Controller
             return redirect()
                 ->route('admin.user.index')
                 ->with('status', 'User created successfully!');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return redirect()
                 ->route('admin.user.create')
                 ->with('error', $e->getMessage());
@@ -72,16 +72,6 @@ class UserController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -91,7 +81,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.user.edit', compact('user'));
     }
 
     /**
@@ -101,9 +91,27 @@ class UserController extends Controller
      * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UserRequest $request, int $userId)
     {
-        //
+        try {
+            $data = [
+                'name' => $request->getName(),
+                'last_name' => $request->getLastName(),
+                'email' => $request->getEmail(),
+            ];
+            if($request->getPassword()) {
+                $data['password'] = bcrypt($request->getPassword());
+            }
+            $this->userRepository->update($data, $userId);
+            return redirect()
+                ->route('admin.user.index')
+                ->with('status', 'User created successfully!');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.user.create')
+                ->with('error', $e->getMessage());
+        }
+
     }
 
     /**
