@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Repositories\UserRepository;
 use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
@@ -25,36 +27,33 @@ class UserController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function index()
+    public function index(): View
     {
         $users = $this->userRepository->paginate();
         return view('admin.user.list', compact('users'));
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin.user.create');
     }
 
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param UserCreateRequest $request
+     * @return RedirectResponse
      */
-    public function store(UserRequest $request)
+    public function store(UserCreateRequest $request)
     {
         try {
-            $this->userRepository->create([
+            $user = $this->userRepository->create([
                 'name' => $request->getName(),
                 'last_name' => $request->getLastName(),
                 'email' => $request->getEmail(),
@@ -63,7 +62,7 @@ class UserController extends Controller
 
             return redirect()
                 ->route('admin.user.index')
-                ->with('status', 'User created successfully!');
+                ->with('status', 'User ' . $user->name . ' created successfully!');
         } catch (\Exception $e) {
             return redirect()
                 ->route('admin.user.create')
@@ -74,24 +73,21 @@ class UserController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return View
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         return view('admin.user.edit', compact('user'));
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param UserUpdateRequest $request
+     * @param int $userId
+     * @return RedirectResponse
      */
-    public function update(UserRequest $request, int $userId)
+    public function update(UserUpdateRequest $request, int $userId): RedirectResponse
     {
         try {
             $data = [
@@ -99,13 +95,15 @@ class UserController extends Controller
                 'last_name' => $request->getLastName(),
                 'email' => $request->getEmail(),
             ];
-            if($request->getPassword()) {
-                $data['password'] = bcrypt($request->getPassword());
+
+            if (!$request->updatePassword()) {
+                $data['password'] = bcrypt($request->updatePassword());
             }
             $this->userRepository->update($data, $userId);
+
             return redirect()
                 ->route('admin.user.index')
-                ->with('status', 'User created successfully!');
+                ->with('status', 'User updated successfully!');
         } catch (\Exception $e) {
             return redirect()
                 ->route('admin.user.create')
@@ -114,14 +112,22 @@ class UserController extends Controller
 
     }
 
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
-        //
+        try {
+            $this->userRepository->delete(['id' => $user->id]);
+            return redirect()
+                ->route('admin.user.index')
+                ->with('status', 'User ' . $user->name . ' deleted successfully!');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('admin.user.index')
+                ->with('error', $e->getMessage());
+        }
     }
 }

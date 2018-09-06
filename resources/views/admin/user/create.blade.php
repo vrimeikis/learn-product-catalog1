@@ -39,6 +39,9 @@
                     <div class="form-group">
                         <label for="confirm_password">{{__('Repeat Password')}}</label>
                         <input type="password" class="form-control" id="confirm_password" name="password_confirmation" placeholder="Repeat Password">
+                        @if($errors->has('password_confirmation'))
+                            <div class="alert-danger">{{ $errors->first('password_confirmation') }}</div>
+                        @endif
                     </div>
                     <div class="form-group">
                         <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
