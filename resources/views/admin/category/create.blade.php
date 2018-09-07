@@ -36,18 +36,17 @@
                                 @endif
                             </div>
 
-                            {{--<div class="form_group">--}}
-                                {{--<label>{{ __('Active') }}</label>--}}
-                                {{--<br>--}}
-                                    {{--<label for="active">--}}
-                                        {{--<input id="active" type="checkbox" name="active" value=""--}}
-                                                {{--{{ (in_array('active', old('active', [])) ? 'checked' : '') }}--}}
-                                        {{--> {{ __('Check if active') }}--}}
-                                    {{--</label>--}}
-                                {{--@if($errors->has('active'))--}}
-                                    {{--<div class="alert-danger">{{ $errors->first('active') }}</div>--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
+                            <div class="form_group">
+                                <label>{{ __('Active') }}</label>
+                                <br>
+                                <label for="active">
+                                    <input id="active" type="checkbox" name="active" value=""
+                                    > {{ __('Check if active') }}
+                                </label>
+                                @if($errors->has('active'))
+                                    <div class="alert-danger">{{ $errors->first('active') }}</div>
+                                @endif
+                            </div>
 
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="{{ __('Save') }}">

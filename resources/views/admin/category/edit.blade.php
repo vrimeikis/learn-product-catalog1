@@ -42,6 +42,19 @@
                                 @endif
                             </div>
 
+                            <div class="form_group">
+                                <label>{{ __('Active') }}</label>
+                                <br>
+                                <label for="active">
+                                    <input id="active" type="checkbox" name="active" value="1"
+                                            {{ old('active', $category->active) ? 'checked' : '' }}
+                                    > {{ __('Check if active') }}
+                                </label>
+                                @if($errors->has('active'))
+                                    <div class="alert-danger">{{ $errors->first('active') }}</div>
+                                @endif
+                            </div>
+
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
                             </div>

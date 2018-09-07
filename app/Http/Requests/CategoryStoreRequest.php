@@ -8,6 +8,7 @@ use App\Category;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Str;
 
 /**
@@ -35,8 +36,8 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:191|string',
-            'cover' => 'nullable|image|max:2048|min:100|dimensions:min_width=600,min_height=300',
-            'active' => 'nullable|bool',
+            'cover' => 'nullable|image|dimensions:min_width=600,min_height=300',
+            'active' => 'boolean',
         ];
     }
 
@@ -94,10 +95,10 @@ class CategoryStoreRequest extends FormRequest
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getActive(): string
+    public function getActive(): bool
     {
-        return $this->input('active', '0');
+        return (bool)$this->input('active');
     }
 }

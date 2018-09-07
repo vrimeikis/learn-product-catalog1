@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Providers;
 
+use App\Repositories\CategoryRepository;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -39,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function registerRepositories(): void
     {
+        $this->app->singleton(CategoryRepository::class);
     }
 
     /**
@@ -46,5 +48,6 @@ class AppServiceProvider extends ServiceProvider
      */
     private function registerServices(): void
     {
+
     }
 }
