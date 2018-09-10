@@ -32,6 +32,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerRepositories();
         $this->registerServices();
+        if ($this->app->environment() == 'local') {
+            $this->app->register('Kurt\Repoist\RepoistServiceProvider');
+        }
     }
 
     /**

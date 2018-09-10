@@ -24,6 +24,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
+
                 <a class="navbar-brand" href="{{ route('admin.home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -49,9 +50,15 @@
                             </li>
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+
+
+
+
+
+
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                    </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -64,7 +71,13 @@
                                         @csrf
                                     </form>
                                 </div>
+                                <a href="{{ route('products.index') }}">{{ __('Products') }}</a>
+
+
+
+
                             </li>
+
                         @endguest
                     </ul>
                 </div>
@@ -76,4 +89,15 @@
         </main>
     </div>
 </body>
+<style>
+    .menu a
+     {
+         padding:20px;
+        font-size:15px;
+     }
+    .navbarDropdown{
+        float:right;
+    }
+
+</style>
 </html>
