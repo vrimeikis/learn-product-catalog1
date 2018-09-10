@@ -41,7 +41,7 @@ class CategoryController extends Controller
      */
     public function index(): View
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryRepository->paginate(5);
 
         return view('admin.category.list', compact('categories'));
     }
@@ -102,7 +102,10 @@ class CategoryController extends Controller
         $category->title = $request->getTitle();
         $category->slug = $request->getSlug();
         $category->active = $request->getActive();
-        $category->cover = $request->getCover() ? $request->getCover()->store(self::COVER_DIRECTORY): null;
+
+        if($request->getCover()){
+            $category->cover = $request->getCover()->store(self::COVER_DIRECTORY);
+        }
 
         $category->save();
 
