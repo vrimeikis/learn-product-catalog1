@@ -10,10 +10,17 @@ use Illuminate\Support\Facades\DB;
 /**
  * Class TestCase
  * @package Tests
+ * @method runDatabaseMigrations()
  */
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication, BuildsMocks;
+
+
+    /**
+     * @var string
+     */
+    protected $baseUrl = 'http://localhost';
 
     /**
      *
