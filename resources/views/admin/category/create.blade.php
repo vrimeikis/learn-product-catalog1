@@ -52,6 +52,8 @@
                                 <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
                             </div>
 
+                            <a class="btn btn-secondary" href="javascript:history.back();">Cancel</a>
+
                         </form>
                     </div>
                 </div>
