@@ -22,6 +22,8 @@
                                 <th>Cover</th>
                                 <th>Title</th>
                                 <th>Slug</th>
+                                <th>Active</th>
+                                <th>Actions</th>
                             </tr>
                             @foreach($categories as $category)
                                 <tr>
@@ -31,6 +33,13 @@
                                         @endif</td>
                                     <td>{{ $category->title }}</td>
                                     <td>{{ $category->slug }}</td>
+                                    <td>
+                                        <label for="active">
+                                            <input id="active" type="checkbox" name="active" value="1"
+                                                    {{ old('active', $category->active) ? 'checked' : '' }}
+                                            >
+                                        </label>
+                                    </td>
                                     <td>
                                         <a class="btn btn-sm btn-success" href="{{ route('admin.category.edit', [$category->id]) }}">{{ __('Edit') }}</a>
                                     </td>
