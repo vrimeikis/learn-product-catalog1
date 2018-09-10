@@ -83,9 +83,9 @@ class CategoryController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Category $category
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function edit(Category $category)
+    public function edit(Category $category): View
     {
         return view('admin.category.edit', compact('category'));
     }

@@ -40,7 +40,7 @@
                                 <label>{{ __('Active') }}</label>
                                 <br>
                                 <label for="active">
-                                    <input id="active" type="checkbox" name="active" value=""
+                                    <input id="active" type="checkbox" name="active" value="0"
                                     > {{ __('Check if active') }}
                                 </label>
                                 @if($errors->has('active'))
