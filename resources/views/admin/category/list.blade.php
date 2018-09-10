@@ -36,7 +36,7 @@
                                     <td>
                                         <label for="active">
                                             <input id="active" type="checkbox" name="active" value="1"
-                                                    {{ old('active', $category->active) ? 'checked' : '' }}
+                                                    {{ old('active', $category->active) ? 'checked' : '' }} disabled
                                             >
                                         </label>
                                     </td>
