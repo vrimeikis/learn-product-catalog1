@@ -17,7 +17,11 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-
+                        @if (session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <form action="{{ route('admin.user.update', [$user->id]) }}" method="post">
 
                             {{ method_field('put') }}
@@ -62,8 +66,8 @@
                             </div>
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
+                                <a class="btn btn-primary" href="{{route('admin.user.index')}}">{{__("Back")}}</a>
                             </div>
-
                         </form>
 
                     </div>

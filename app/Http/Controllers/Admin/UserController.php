@@ -104,17 +104,17 @@ class UserController extends Controller
                 'email' => $request->getEmail(),
             ];
 
-            if ($request->updatePassword()) {
-                $data['password'] = bcrypt($request->updatePassword());
+            if ($request->getPassword()) {
+                $data['password'] = bcrypt($request->getPassword());
             }
-            $this->userRepository->update($data, $userId);
+           $this->userRepository->update($data, $userId);
 
             return redirect()
-                ->route('admin.user.index')
-                ->with('status', 'User updated successfully!');
+                ->route('admin.user.edit', $userId)
+                ->with('status', 'User '. $request->getName() . ' updated successfully!');
         } catch (\Exception $exception) {
             return redirect()
-                ->route('admin.user.create')
+                ->route('admin.user.edit', $userId)
                 ->with('error', $exception->getMessage());
         }
 
