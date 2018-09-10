@@ -6,6 +6,10 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * Class UserCreateRequest
+ * @package App\Http\Requests
+ */
 class UserCreateRequest extends FormRequest
 {
     /**
@@ -13,7 +17,7 @@ class UserCreateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,7 +27,7 @@ class UserCreateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string|max:30',
@@ -33,22 +37,34 @@ class UserCreateRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->input('name');
     }
 
+    /**
+     * @return null|string
+     */
     public function getLastName(): ?string
     {
         return $this->input('last_name');
     }
 
+    /**
+     * @return string
+     */
     public function getEmail(): string
     {
         return $this->input('email');
     }
 
-    public function getPassword(): string
+    /**
+     * @return string
+     */
+    public function getPassword(): ?string
     {
         return $this->input('password');
     }

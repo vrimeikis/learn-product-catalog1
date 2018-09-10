@@ -12,9 +12,16 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\View\View;
 
+/**
+ * Class UserController
+ * @package App\Http\Controllers\Admin
+ */
 class UserController extends Controller
 {
 
+    /**
+     * @var UserRepository
+     */
     private $userRepository;
 
     /**
@@ -26,8 +33,9 @@ class UserController extends Controller
         $this->userRepository = $userRepository;
     }
 
+
     /**
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return View
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function index(): View
@@ -50,7 +58,7 @@ class UserController extends Controller
      * @param UserCreateRequest $request
      * @return RedirectResponse
      */
-    public function store(UserCreateRequest $request)
+    public function store(UserCreateRequest $request): RedirectResponse
     {
         try {
             $user = $this->userRepository->create([
@@ -63,10 +71,10 @@ class UserController extends Controller
             return redirect()
                 ->route('admin.user.index')
                 ->with('status', 'User ' . $user->name . ' created successfully!');
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             return redirect()
                 ->route('admin.user.create')
-                ->with('error', $e->getMessage());
+                ->with('error', $exception->getMessage());
         }
 
     }
@@ -96,7 +104,7 @@ class UserController extends Controller
                 'email' => $request->getEmail(),
             ];
 
-            if (!$request->updatePassword()) {
+            if ($request->updatePassword()) {
                 $data['password'] = bcrypt($request->updatePassword());
             }
             $this->userRepository->update($data, $userId);
@@ -104,30 +112,11 @@ class UserController extends Controller
             return redirect()
                 ->route('admin.user.index')
                 ->with('status', 'User updated successfully!');
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             return redirect()
                 ->route('admin.user.create')
-                ->with('error', $e->getMessage());
+                ->with('error', $exception->getMessage());
         }
 
-    }
-
-
-    /**
-     * @param User $user
-     * @return RedirectResponse
-     */
-    public function destroy(User $user): RedirectResponse
-    {
-        try {
-            $this->userRepository->delete(['id' => $user->id]);
-            return redirect()
-                ->route('admin.user.index')
-                ->with('status', 'User ' . $user->name . ' deleted successfully!');
-        } catch (\Exception $e) {
-            return redirect()
-                ->route('admin.user.index')
-                ->with('error', $e->getMessage());
-        }
     }
 }

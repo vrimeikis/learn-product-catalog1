@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+/**
+ * Class UserUpdateRequest
+ * @package App\Http\Requests
+ */
 class UserUpdateRequest extends UserCreateRequest
 {
     /**
@@ -33,7 +37,10 @@ class UserUpdateRequest extends UserCreateRequest
 
     }
 
-    public function updatePassword(): ?string
+    /**
+     * @return null|string
+     */
+    public function getPassword(): ?string
     {
         return $this->input('password');
     }
