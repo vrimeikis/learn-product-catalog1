@@ -17,13 +17,10 @@ Route::get('/', function() {
 
 Auth::routes();
 
-Route::resource('products','ProductController');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
     Route::get('/', 'Admin\\HomeController@index')->name('home');
 
-
-
-
+    Route::resource('products','Admin\\ProductController')->except(['show', 'destroy']);
 });
 
