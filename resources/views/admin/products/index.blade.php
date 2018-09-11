@@ -12,7 +12,6 @@
         </div>
     </div>
 
-
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
@@ -28,7 +27,7 @@
             <th>Context</th>
             <th>Cover</th>
             <th>Active</th>
-            <th width="280px">Action</th>
+            <th>Action</th>
         </tr>
         @foreach ($products as $product)
             <tr>
@@ -39,20 +38,19 @@
                 <td>@if ($product->cover)
                         <img width="100" src="{{ Storage::url($product->cover) }}">
                     @endif</td>
-                <td>{{ $product->active }}</td>
+                <td><label for="active">
+                        <input id="active" type="checkbox" name="active" value="1"
+                               {{ old('active', $product->active) ? 'checked' : '' }} disabled>
+                    </label></td>
 
 
                 <td>
 
 
-
-                        <a class="btn btn-primary" href="{{ route('admin.products.edit',$product->id) }}">Edit</a>
-
-
-                        @csrf
+                    <a class="btn btn-primary" href="{{ route('admin.products.edit',$product->id) }}">Edit</a>
 
 
-
+                    @csrf
 
 
                 </td>

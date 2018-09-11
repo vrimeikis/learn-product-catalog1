@@ -24,7 +24,6 @@
         </div>
     @endif
 
-
     <form action="{{ route('admin.products.update',$product->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -34,29 +33,46 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $product->title }}" class="form-control" placeholder="title">
+                    <input type="text" name="name" value="{{ $product->title }}" class="form-control"
+                           placeholder="title">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Price:</strong>
-                    <input type="text" name="name" value="{{ $product->price }}" class="form-control" placeholder="price">
+                    <input type="text" name="name" value="{{ $product->price }}" class="form-control"
+                           placeholder="price">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Context:</strong>
-                    <textarea class="form-control" style="height:150px" name="context" placeholder="Context">{{ $product->context }}</textarea>
+                    <textarea class="form-control" style="height:150px" name="context"
+                              placeholder="Context">{{ $product->context }}</textarea>
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <input type="checkbox" id="active" name="active"
-                           value={{ $product->active }} />
-                    <label for="active">Active?</label>
+                    @if ($product->cover)
+                            <img width="100" src="{{ Storage::url($product->cover) }}">
+                        @endif
+                    <input type="file" class="form-control" name="cover"/>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <label for="active">
+                        <input id="active" type="checkbox" name="active" value="1"
+                                {{ old('active', $product->active) ? 'checked' : '' }}
+                        > {{ __('Active?') }}
+                    </label>
+                    @if($errors->has('active'))
+                        <div class="alert-danger">{{ $errors->first('active') }}</div>
+                    @endif
                 </div>
             </div>
 
@@ -64,7 +80,6 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
-
 
 
     </form>

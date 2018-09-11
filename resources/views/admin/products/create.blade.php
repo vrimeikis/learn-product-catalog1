@@ -57,9 +57,15 @@
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <input type="checkbox" id="active" name="active"
-                           value="active" />
-                    <label for="active">Active?</label>
+                    <label>{{ __('Active') }}</label>
+                    <br>
+                    <label for="active">
+                        <input id="active" type="checkbox" name="active" value="1"
+                        > {{ __('Active?') }}
+                    </label>
+                    @if($errors->has('active'))
+                        <div class="alert-danger">{{ $errors->first('active') }}</div>
+                    @endif
                 </div>
             </div>
 
@@ -68,7 +74,6 @@
             </div>
         </div>
 
-
     </form>
     <div class="container">
 
@@ -76,7 +81,6 @@
 
 
             <div class="panel-body">
-
 
 
                 @if ($message = Session::get('success'))
