@@ -30,6 +30,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $last_name
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\User whereLastName($value)
  */
 class User extends Authenticatable
 {
