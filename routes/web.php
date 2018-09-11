@@ -19,6 +19,6 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
     Route::get('/', 'Admin\\HomeController@index')->name('home');
-    Route::resource('user', 'Admin\\UserController')->except('show');
+    Route::resource('user', 'Admin\\UserController')->except(['show','destroy']);
 });
 

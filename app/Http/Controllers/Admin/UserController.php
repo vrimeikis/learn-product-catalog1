@@ -10,6 +10,7 @@ use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 
 /**
@@ -40,6 +41,7 @@ class UserController extends Controller
      */
     public function index(): View
     {
+        /** @var LengthAwarePaginator $users */
         $users = $this->userRepository->paginate();
         return view('admin.user.list', compact('users'));
     }
