@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
     Route::get('/', 'Admin\\HomeController@index')->name('home');
+
     Route::resource('category', 'Admin\\CategoryController')->except(['show', 'destroy']);
+    Route::resource('products','Admin\\ProductController')->except(['show', 'destroy']);
 });
 
