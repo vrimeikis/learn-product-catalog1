@@ -6,9 +6,12 @@ use App\Product;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
+
 
 /**
- * @method getSlug()
+ * Class ProductRequest
+ * @package App\Http\Requests
  */
 class ProductRequest extends FormRequest
 {
@@ -44,36 +47,6 @@ class ProductRequest extends FormRequest
     }
 
     /**
-     * @return Validator
-     */
-    protected function getValidatorInstance(): Validator
-    {
-        $validator = parent::getValidatorInstance();
-        $validator->after(function (Validator $validator) {
-            if ($this->isMethod('post') && $this->slugExists()) {
-                $validator
-                    ->errors()
-                    ->add('title', 'Slug by name exists on DB');
-                return;
-            }
-        });
-        return $validator;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function slugExists(): bool
-    {
-        $slug = Product::whereSlug($this->getSlug())->get();
-
-        if (!empty($slug->toArray())) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * @return null|string
      */
     public function getTitle(): ? string
@@ -81,6 +54,9 @@ class ProductRequest extends FormRequest
         return $this->input('title');
     }
 
+    /**
+     * @return string
+     */
     public function getContext(): string
     {
         return $this->input('context');

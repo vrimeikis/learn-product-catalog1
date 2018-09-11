@@ -57,6 +57,21 @@
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
+                    <strong>Context:</strong>
+                    @foreach($categories as $category)
+                        <label for="category_{{ $category->id }}">
+                            <input id="category_{{ $category->id }}" type="checkbox" name="category[]"
+                                   value="{{ $category->id }}"
+                                    {{ (in_array($category->id, old('category', [])) ? 'checked' : '') }}
+                            > {{ $category->title }}
+                        </label>
+                        <br>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
                     <input type="checkbox" id="active" name="active"
                            value="active" />
                     <label for="active">Active?</label>
