@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Categories
+                        Users
                         <a class="btn btn-sm btn-outline-dark" href="{{ route('admin.user.create') }}">{{ __('New') }}</a>
                     </div>
                     <div class="card-body">

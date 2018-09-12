@@ -55,7 +55,6 @@ class ProductController extends Controller
             $product->title = $request->title;
             $product->price = $request->price;
             $product->context = $request->context;
-            $product->cover = $cover;
             $product->save();
 
             return redirect()
