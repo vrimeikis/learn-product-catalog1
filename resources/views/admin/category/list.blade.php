@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-header">
                         Categories
-                        <a class="btn btn-sm btn-outline-dark" href="{{ route('admin.category.create') }}">{{ __('New') }}</a>
+                        <a class="btn btn-sm btn-primary float-right" href="{{ route('admin.category.create') }}">{{ __('Add Category') }}</a>
                     </div>
                     <div class="card-body">
 
