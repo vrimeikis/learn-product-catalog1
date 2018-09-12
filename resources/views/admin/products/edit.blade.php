@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('content')
     <div class="row">
         <div class="col-lg-12 margin-tb">
@@ -26,22 +25,21 @@
 
 
     <form action="{{ route('admin.products.update',$product->id) }}" method="POST">
-        @csrf
-        @method('PUT')
-
+        {{ (method_field('put')) }}
+        {{ csrf_field() }}
 
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $product->title }}" class="form-control" placeholder="title">
+                    <input type="text" name="title" value="{{ $product->title }}" class="form-control" placeholder="title">
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Price:</strong>
-                    <input type="text" name="name" value="{{ $product->price }}" class="form-control" placeholder="price">
+                    <input type="text" name="price" value="{{ $product->price }}" class="form-control" placeholder="price">
                 </div>
             </div>
 
@@ -55,6 +53,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Categories:</strong>
+                    <br>
                     @foreach($categories as $category)
                         <label for="category_{{ $category->id }}">
                             <input id="category_{{ $category->id }}" type="checkbox" name="category[]"
@@ -79,10 +78,5 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
-
-
-
     </form>
-
-
 @endsection
