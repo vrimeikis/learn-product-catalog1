@@ -36,12 +36,6 @@
                                         <td class="d-flex">
                                             <a class="btn btn-sm btn-success"
                                                href="{{ route('admin.user.edit', [$user->id]) }}">{{ __('Edit') }}</a>
-
-                                            <form action="{{ route('admin.user.destroy', [$user->id]) }}" method="post">
-                                                {{ csrf_field() }}
-                                                {{ method_field('delete') }}
-                                                <input class="btn btn-sm btn-danger ml-2" type="submit" value="Delete">
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
