@@ -17,6 +17,7 @@ use App\Product;
  */
 class ProductRepository extends Repository
 {
+    const DEFAULT_PER_PAGE = 10;
     /**
      * @return string
      */
@@ -24,4 +25,5 @@ class ProductRepository extends Repository
     {
         return Product::class;
     }
+
 }
