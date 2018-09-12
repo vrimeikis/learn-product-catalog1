@@ -59,7 +59,7 @@
                                 <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
                             </div>
 
-                            <a class="btn btn-secondary" href="javascript:history.back();">Cancel</a>
+                            <a class="btn btn-primary" href="javascript:history.back();">{{__('Back')}}</a>
                         </form>
                     </div>
                 </div>
