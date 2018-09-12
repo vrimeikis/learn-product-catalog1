@@ -1,26 +1,19 @@
 @extends('layouts.admin')
-
 @section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        New Category
+                    </div>
 
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Add New Product</h2>
-            </div>
-        </div>
-    </div>
-
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
 
     <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
@@ -70,54 +63,9 @@
 
 
     </form>
-    <div class="container">
-
-        <div class="panel panel-primary">
-
-
-            <div class="panel-body">
-
-
-
-                @if ($message = Session::get('success'))
-
-                    <div class="alert alert-success alert-block">
-
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-
-                        <strong>{{ $message }}</strong>
-
                     </div>
-
-                    <img src="images/{{ Session::get('image') }}">
-
-                @endif
-
-                @if (count($errors) > 0)
-
-                    <div class="alert alert-danger">
-
-                        <strong>Whoops!</strong> There were some problems with your input.
-
-                        <ul>
-
-                            @foreach ($errors->all() as $error)
-
-                                <li>{{ $error }}</li>
-
-                            @endforeach
-
-                        </ul>
-
-                    </div>
-
-                @endif
-
+                </div>
             </div>
-
         </div>
-
     </div>
-
-
 @endsection
