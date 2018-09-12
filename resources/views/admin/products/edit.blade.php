@@ -69,7 +69,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <input type="checkbox" id="active" name="active"
-                           value={{ $product->active }} />
+                           value="1" {{ old($product->active) }} />
                     <label for="active">Active?</label>
                 </div>
             </div>

@@ -53,7 +53,7 @@
 
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Context:</strong>
+                    <strong>Categories:</strong>
                     @foreach($categories as $category)
                         <label for="category_{{ $category->id }}">
                             <input id="category_{{ $category->id }}" type="checkbox" name="category[]"
@@ -69,7 +69,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <input type="checkbox" id="active" name="active"
-                           value="active" />
+                           value="1" />
                     <label for="active">Active?</label>
                 </div>
             </div>

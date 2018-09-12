@@ -9,9 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Product;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
 
 
@@ -53,13 +50,11 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request): RedirectResponse
     {
-            $cover = $request->file('cover')->store('products');
-
             $product = new Product();
             $product->title = $request->title;
             $product->price = $request->price;
             $product->context = $request->context;
-            $product->cover = $cover;
+            $product->cover = $request->cover ? $request->cover->store('products') : null;
 
             $product->categories()->attach($request->getCategoriesIds());
 
