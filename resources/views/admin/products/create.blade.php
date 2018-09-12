@@ -54,6 +54,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Categories:</strong>
+                    <br>
                     @foreach($categories as $category)
                         <label for="category_{{ $category->id }}">
                             <input id="category_{{ $category->id }}" type="checkbox" name="category[]"
@@ -69,7 +70,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <input type="checkbox" id="active" name="active"
-                           value="1" />
+                           value="1" {{ old('active')? 'checked="checked"' : '' }} />
                     <label for="active">Active?</label>
                 </div>
             </div>

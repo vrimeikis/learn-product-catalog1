@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -20,14 +21,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Category[] $categories
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereContext($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereCover($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Product whereUpdatedAt($value)
+ * @method static Builder|Product whereActive($value)
+ * @method static Builder|Product whereContext($value)
+ * @method static Builder|Product whereCover($value)
+ * @method static Builder|Product whereCreatedAt($value)
+ * @method static Builder|Product whereId($value)
+ * @method static Builder|Product wherePrice($value)
+ * @method static Builder|Product whereTitle($value)
+ * @method static Builder|Product whereUpdatedAt($value)
  * @method static whereSlug($getSlug)
  * @mixin \Eloquent
  */

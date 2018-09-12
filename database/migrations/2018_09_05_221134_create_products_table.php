@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('price', 191);
             $table->text('context');
             $table->string('cover')->nullable();
-            $table->enum('active', ['0', '1'])->default(0);
+            $table->enum('active', ['0', '1'])->default('0');
             $table->timestamps();
 
         });

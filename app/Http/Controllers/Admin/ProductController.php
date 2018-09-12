@@ -50,19 +50,21 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request): RedirectResponse
     {
-            $product = new Product();
-            $product->title = $request->title;
-            $product->price = $request->price;
-            $product->context = $request->context;
-            $product->cover = $request->cover ? $request->cover->store('products') : null;
+        $data = [
+        'title' => $request->getTitle(),
+        'price' => $request->getPrice(),
+        'context' => $request->getContext(),
+        'active' => $request->getActive(),
+        'cover' => $request->getCover() ? $request->getCover()->store('products') : null,
+            ];
 
-            $product->categories()->attach($request->getCategoriesIds());
+        $product = Product::create($data);
 
-            $product->save();
+        $product->categories()->attach($request->getCategoriesIds());
 
-            return redirect()
-                ->route('admin.products.index')
-                ->with('success', 'Product created successfully.');
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', 'Product created successfully.');
     }
 
     /**
@@ -90,15 +92,15 @@ class ProductController extends Controller
         $product->title = $request->getTitle();
         $product->price = $request->getPrice();
         $product->context = $request->getContext();
+        $product->active = $request->getActive();
 
         if($request->getCover()){
             $product->cover = $request->getCover()->store('products');
         }
 
-        $product->categories()->sync($request->getCategoriesIds());
-
         $product->update($request->all());
 
+        $product->categories()->sync($request->getCategoriesIds());
 
         return redirect()->route('admin.products.index')
             ->with('success','Product updated successfully');

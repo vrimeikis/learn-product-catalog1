@@ -78,11 +78,11 @@ class ProductRequest extends FormRequest
     }
 
     /**
-     * @return bool
+     * @return int
      */
-    public function getActive(): bool
+    public function getActive(): int
     {
-        return (bool)$this->input('active');
+        return (int)$this->input('active');
     }
 
     /**
