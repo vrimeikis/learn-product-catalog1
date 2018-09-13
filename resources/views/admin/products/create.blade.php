@@ -62,7 +62,7 @@
                 <a class="btn btn-secondary pull-right" href="javascript:history.back();">Cancel</a>
             </div>
         </div>
-
+        </div>
 
     </form>
                     </div>
