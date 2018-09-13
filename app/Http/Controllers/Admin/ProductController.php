@@ -84,10 +84,8 @@ class ProductController extends Controller
 
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return View
      */
     public function edit(Product $product): View
     {
