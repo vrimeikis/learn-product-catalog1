@@ -57,9 +57,9 @@
 
                             <div class="form-group">
                                 <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
-                            </div>
+                                <a class="btn btn-secondary pull-right" href="javascript:history.back();">Cancel</a>
 
-                            <a class="btn btn-secondary" href="javascript:history.back();">Cancel</a>
+                            </div>
                         </form>
                     </div>
                 </div>

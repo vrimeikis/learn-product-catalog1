@@ -2,14 +2,19 @@
 @section('page-title', 'Add User | ')
 @section('content')
     <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-md-6">
-                <h2 class="text-center">{{__('Add User')}}</h2>
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    New User
+                </div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
                 @if (session('error'))
                     <div class="alert alert-danger" role="alert">
                         {{ session('error') }}
@@ -55,11 +60,13 @@
                     </div>
                     <div class="form-group">
                         <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
+                        <a class="btn btn-secondary pull-right" href="javascript:history.back();">Cancel</a>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     </div>
-
+    </div>
 
 @endsection

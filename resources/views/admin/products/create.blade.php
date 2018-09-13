@@ -1,127 +1,79 @@
 @extends('layouts.admin')
-
 @section('content')
-
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Add New Product</h2>
-            </div>
-        </div>
-    </div>
-
-
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-success" role="alert">
-            {{ session('error') }}
-        </div>
-    @endif
-    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-
-
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Title:</strong>
-                    <input type="text" name="title" class="form-control" placeholder="Title">
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Price:</strong>
-                    <input type="text" name="price" class="form-control" placeholder="Price">
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <strong>Context:</strong>
-                    <textarea class="form-control" style="height:150px" name="context" placeholder="context"></textarea>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <input type="file" class="form-control" name="cover"/>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <input type="checkbox" id="active" name="active"
-                           value="1" />
-                    <label for="active">Active?</label>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-
-
-    </form>
     <div class="container">
-
-        <div class="panel panel-primary">
-
-
-            <div class="panel-body">
-
-
-
-                @if ($message = Session::get('success'))
-
-                    <div class="alert alert-success alert-block">
-
-                        <button type="button" class="close" data-dismiss="alert">×</button>
-
-                        <strong>{{ $message }}</strong>
-
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        New Product
                     </div>
 
-                    <img src="images/{{ Session::get('image') }}">
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-                @endif
+                        @if (session('error'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
+                        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
 
-                @if (count($errors) > 0)
 
-                    <div class="alert alert-danger">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Title:</strong>
+                                        <input type="text" name="title" class="form-control" placeholder="Title">
+                                    </div>
+                                </div>
 
-                        <strong>Whoops!</strong> There were some problems with your input.
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Price:</strong>
+                                        <input type="text" name="price" class="form-control" placeholder="Price">
+                                    </div>
+                                </div>
 
-                        <ul>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Context:</strong>
+                                        <textarea class="form-control" style="height:150px" name="context"
+                                                  placeholder="context"></textarea>
+                                    </div>
+                                </div>
 
-                            @foreach ($errors->all() as $error)
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <input type="file" class="form-control" name="cover"/>
+                                    </div>
+                                </div>
 
-                                <li>{{ $error }}</li>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <input type="checkbox" id="active" name="active"
+                                               value="1"/>
+                                        <label for="active">Active?</label>
+                                    </div>
+                                </div>
 
-                            @endforeach
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
+                                        <a class="btn btn-secondary pull-right"
+                                           href="javascript:history.back();">Cancel</a>
+                                    </div>
+                                </div>
+                            </div>
 
-                        </ul>
-
+                        </form>
                     </div>
-
-                @endif
-
+                </div>
             </div>
-
         </div>
-
     </div>
-
-
 @endsection
