@@ -10,11 +10,7 @@ use App\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
 use Illuminate\View\View;
-
 
 /**
  * Class ProductController
@@ -41,7 +37,6 @@ class ProductController extends Controller
         $this->productRepository = $productRepository;
     }
 
-
     /**
      * @return View
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
@@ -54,7 +49,6 @@ class ProductController extends Controller
         return view('admin.products.index', compact('products'));
     }
 
-
     /**
      * @return View
      */
@@ -62,7 +56,6 @@ class ProductController extends Controller
     {
         return view('admin.products.create');
     }
-
 
     /**
      * @param ProductRequest $request
@@ -101,7 +94,6 @@ class ProductController extends Controller
         return view('admin.products.edit', compact('product'));
     }
 
-
     /**
      * @param ProductRequest $request
      * @param int $productId
@@ -123,8 +115,5 @@ class ProductController extends Controller
         } catch (\Exception $exception) {
 
         }
-
     }
-
-
 }

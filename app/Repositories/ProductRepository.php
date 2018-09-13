@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: justi
- * Date: 2018-09-12
- * Time: 18:53
- */
+
 declare(strict_types=1);
 
 namespace App\Repositories;
