@@ -15,7 +15,11 @@
                             </div>
                         @endif
 
-
+                        @if (session('error'))
+                                <div class="alert alert-success" role="alert">
+                                    {{ session('error') }}
+                                </div>
+                            @endif
                         <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
@@ -52,7 +56,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <input type="checkbox" id="active" name="active"
-                                               value="active"/>
+                                               value="1"/>
                                         <label for="active">Active?</label>
                                     </div>
                                 </div>

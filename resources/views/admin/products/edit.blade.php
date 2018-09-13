@@ -23,28 +23,28 @@
 
                 <div class="form-group">
                     <strong>Name:</strong>
-                    <input type="text" name="name" value="{{ $product->title }}" class="form-control" placeholder="title">
+                    <input type="text" name="title" value="{{ old('title', $product->title) }}" class="form-control" placeholder="title">
                 </div>
 
 
 
                 <div class="form-group">
                     <strong>Price:</strong>
-                    <input type="text" name="name" value="{{ $product->price }}" class="form-control" placeholder="price">
+                    <input type="text" name="price" value="{{ old('price', $product->price) }}" class="form-control" placeholder="price">
                 </div>
 
 
 
                 <div class="form-group">
                     <strong>Context:</strong>
-                    <textarea class="form-control" style="height:150px" name="context" placeholder="Context">{{ $product->context }}</textarea>
+                    <textarea class="form-control" style="height:150px" name="context" placeholder="Context">{{ old('context', $product->context) }}</textarea>
                 </div>
 
 
 
                 <div class="form-group">
                     <input type="checkbox" id="active" name="active"
-                           value={{ $product->active }} />
+                           value="1" {{  old('active', $product->active) == 1 ? 'checked' : ''}}/>
                     <label for="active">Active?</label>
                 </div>
 
@@ -61,5 +61,9 @@
                 </div>
             </div>
         </div>
+
+
+
     </div>
+
 @endsection
