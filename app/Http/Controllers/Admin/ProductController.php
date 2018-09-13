@@ -105,7 +105,7 @@ class ProductController extends Controller
     {
         try {
             $product = [
-                'titl' => $request->getTitle(),
+                'title' => $request->getTitle(),
                 'price' => $request->getPrice(),
                 'context' => $request->getContext(),
                 'active' => $request->isActive() ? '1' : '0',
