@@ -8,9 +8,6 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Product;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
-
 use App\Repositories\ProductRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
@@ -79,7 +76,7 @@ class ProductController extends Controller
                 'cover' => $request->getCover() ? $request->getCover()->store(self::COVER_DIRECTORY) : null,
             ]);
 
-            $product->catgeories->atach($request->getCatgeoriesIds());
+            $product->categories()->attach($request->getCategoriesIds());
 
             return redirect()
                 ->route('admin.products.index')
@@ -121,12 +118,13 @@ class ProductController extends Controller
                 'cover' => $request->getCover() ? $request->getCover()->store(self::COVER_DIRECTORY) : null,
             ];
 
-            $product = $this->productRepository->update($data, $productId);
+            /** @var Product $product */
+            $product = $this->productRepository->updateOrCreate($data, ['id' => $productId]);
 
             $product->categories()->sync($request->getCategoriesIds());
 
             return redirect()->route('admin.products.index')
-                ->with('success', 'Product updated successfully');
+                ->with('status', 'Product updated successfully');
         } catch (\Exception $exception) {
             return redirect()
                 ->route('admin.products.edit', $this->productRepository->find($productId))
