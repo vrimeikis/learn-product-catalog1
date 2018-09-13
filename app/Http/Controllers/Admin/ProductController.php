@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Admin;
 
-
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
 use App\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
-
+use App\Repositories\ProductRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 /**
  * Class ProductController
@@ -18,87 +19,103 @@ use Illuminate\Support\Facades\File;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $products = Product::latest()->paginate(10);
-
-        return view('admin.products.index',compact('products'));
-    }
-
+    const COVER_DIRECTORY = 'products';
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @var ProductRepository
      */
-    public function create()
+    private $productRepository;
+
+    /**
+     * ProductController constructor.
+     * @param $productRepository
+     */
+    public function __construct(ProductRepository $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
+    /**
+     * @return View
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function index(): View
+    {
+        /** @var LengthAwarePaginator $products */
+        $products = $this->productRepository->makeQuery()->latest()->paginate();
+
+        return view('admin.products.index', compact('products'));
+    }
+
+    /**
+     * @return View
+     */
+    public function create(): View
     {
         return view('admin.products.create');
     }
 
-
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param ProductRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request): RedirectResponse
     {
-            $cover = $request->file('cover')->store('products');
-
-            $product = new Product();
-            $product->title = $request->title;
-            $product->price = $request->price;
-            $product->context = $request->context;
-            $product->cover = $cover;
-            $product->save();
-
+        try {
+            $this->productRepository->create([
+                'title' => $request->getTitle(),
+                'price' => $request->getPrice(),
+                'context' => $request->getContext(),
+                'active' => $request->isActive() ? '1' : '0',
+                'cover' => $request->getCover() ? $request->getCover()->store(self::COVER_DIRECTORY) : null,
+            ]);
             return redirect()
                 ->route('admin.products.index')
                 ->with('success', 'Product created successfully.');
-    }
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('admin.products.create')
+                ->with('error', $exception->getMessage());
+        }
 
-
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
-    {
-        return view('admin.products.edit',compact('product'));
     }
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
+     * @param Product $product
+     * @return View
      */
-    public function update(Request $request, Product $product)
+    public function edit(Product $product): View
     {
-
-
-
-        $product->update($request->all());
-
-
-        return redirect()->route('admin.products.index')
-            ->with('success','Product updated successfully');
+        return view('admin.products.edit', compact('product'));
     }
 
 
-
-
-
+    /**
+     * @param ProductRequest $request
+     * @param int $productId
+     * @return RedirectResponse
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function update(ProductRequest $request, int $productId): RedirectResponse
+    {
+        try {
+            $product = [
+                'title' => $request->getTitle(),
+                'price' => $request->getPrice(),
+                'context' => $request->getContext(),
+                'active' => $request->isActive() ? '1' : '0',
+                'cover' => $request->getCover() ? $request->getCover()->store(self::COVER_DIRECTORY) : null,
+            ];
+            $this->productRepository->update($product, $productId);
+            return redirect()->route('admin.products.index')
+                ->with('success', 'Product updated successfully');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('admin.products.edit', $this->productRepository->find($productId))
+                ->with('error', $exception->getMessage());
+        }
+    }
 }
