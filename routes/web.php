@@ -11,17 +11,18 @@
 |
 */
 
-Route::get('/', function() {
+Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function() {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'auth'], function () {
     Route::get('/', 'Admin\\HomeController@index')->name('home');
 
     Route::resource('category', 'Admin\\CategoryController')->except(['show', 'destroy']);
-    Route::resource('products','Admin\\ProductController')->except(['show', 'destroy']);
-    Route::resource('user', 'Admin\\UserController')->except(['show','destroy']);
+    Route::resource('products', 'Admin\\ProductController')->except(['show', 'destroy']);
+    Route::resource('user', 'Admin\\UserController')->except(['show', 'destroy']);
+    Route::resource('supplier', 'Admin\\SupplierController')->except(['show', 'destroy']);
 });
 
