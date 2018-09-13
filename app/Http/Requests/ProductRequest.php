@@ -78,18 +78,18 @@ class ProductRequest extends FormRequest
     }
 
     /**
-     * @return int
-     */
-    public function getActive(): int
-    {
-        return (int)$this->input('active');
-    }
-
-    /**
      * @return array
      */
     public function getCategoriesIds(): array
     {
         return $this->input('category', []);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return (bool)$this->input('active');
     }
 }

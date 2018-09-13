@@ -7,10 +7,9 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        {{__('Users')}}
-                        <a class="btn btn-sm btn-primary float-right" href="{{ route('admin.user.create') }}">{{ __('Add User') }}</a>
+                        Users
+                        <a class="btn btn-sm btn-outline-dark" href="{{ route('admin.user.create') }}">{{ __('New') }}</a>
                     </div>
-
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -37,11 +36,6 @@
                                             <a class="btn btn-sm btn-success"
                                                href="{{ route('admin.user.edit', [$user->id]) }}">{{ __('Edit') }}</a>
 
-                                            <form action="{{ route('admin.user.destroy', [$user->id]) }}" method="post">
-                                                {{ csrf_field() }}
-                                                {{ method_field('delete') }}
-                                                <input class="btn btn-sm btn-danger ml-2" type="submit" value="Delete">
-                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -52,7 +46,6 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-
+    </div>
 @endsection

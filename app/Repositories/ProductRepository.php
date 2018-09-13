@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use App\User;
+use App\Product;
 
 /**
- * Class UserRepository
+ * Class ProductRepository
  * @package App\Repositories
  */
-class UserRepository extends Repository
+class ProductRepository extends Repository
 {
+    const DEFAULT_PER_PAGE = 10;
     /**
      * @return string
      */
     public function model(): string
     {
-        return User::class;
+        return Product::class;
     }
+
 }
