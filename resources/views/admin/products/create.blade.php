@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        New Category
+                        New Product
                     </div>
 
                     <div class="card-body">
@@ -56,8 +56,10 @@
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
+                <a class="btn btn-secondary pull-right" href="javascript:history.back();">Cancel</a>
             </div>
         </div>
 

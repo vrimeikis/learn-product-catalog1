@@ -34,12 +34,12 @@
                 </div>
 
 
-            <div class="col-xs-12 col-sm-12 col-md-12">
+
                 <div class="form-group">
                     <strong>Context:</strong>
                     <textarea class="form-control" style="height:150px" name="context" placeholder="Context">{{ $product->context }}</textarea>
                 </div>
-            </div>
+
 
 
                 <div class="form-group">
@@ -52,9 +52,10 @@
 
         <div class="form-group">
             <input class="btn btn-success" type="submit" value="{{ __('Save') }}">
+            <a class="btn btn-secondary pull-right" href="javascript:history.back();">Cancel</a>
+
         </div>
 
-        <a class="btn btn-secondary" href="javascript:history.back();">Cancel</a>
     </form>
                     </div>
                 </div>
