@@ -9,6 +9,7 @@
                     </div>
 
                     <div class="card-body">
+
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('status') }}
@@ -16,13 +17,14 @@
                         @endif
 
                         @if (session('error'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('error') }}
-                                </div>
-                            @endif
-                        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
+                            <div class="alert alert-success" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
 
+                        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+
+                            {{ csrf_field() }}
 
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
@@ -55,6 +57,23 @@
 
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
+                                        <strong>Categories:</strong>
+                                        <br>
+                                        @foreach($categories as $category)
+                                            <label for="category_{{ $category->id }}">
+                                                <input id="category_{{ $category->id }}" type="checkbox"
+                                                       name="category[]"
+                                                       value="{{ $category->id }}"
+                                                        {{ (in_array($category->id, old('category', [])) ? 'checked' : '') }}
+                                                > {{ $category->title }}
+                                            </label>
+                                            <br>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
                                         <input type="checkbox" id="active" name="active"
                                                value="1"/>
                                         <label for="active">Active?</label>
@@ -72,6 +91,7 @@
 
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>

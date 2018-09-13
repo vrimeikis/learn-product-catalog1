@@ -1,9 +1,10 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Controllers\Admin;
 
+use App\Category;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Product;
@@ -54,7 +55,9 @@ class ProductController extends Controller
      */
     public function create(): View
     {
-        return view('admin.products.create');
+        $categories = Category::all();
+
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
@@ -64,13 +67,17 @@ class ProductController extends Controller
     public function store(ProductRequest $request): RedirectResponse
     {
         try {
-            $this->productRepository->create([
+            /** @var Product $product */
+            $product = $this->productRepository->create([
                 'title' => $request->getTitle(),
                 'price' => $request->getPrice(),
                 'context' => $request->getContext(),
                 'active' => $request->isActive() ? '1' : '0',
                 'cover' => $request->getCover() ? $request->getCover()->store(self::COVER_DIRECTORY) : null,
             ]);
+
+            $product->categories()->attach($request->getCategoriesIds());
+
             return redirect()
                 ->route('admin.products.index')
                 ->with('success', 'Product created successfully.');
@@ -89,9 +96,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product): View
     {
-        return view('admin.products.edit', compact('product'));
-    }
+        $categories = Category::all();
 
+        return view('admin.products.edit',compact('product', 'categories'));
+    }
 
     /**
      * @param ProductRequest $request
@@ -102,16 +110,21 @@ class ProductController extends Controller
     public function update(ProductRequest $request, int $productId): RedirectResponse
     {
         try {
-            $product = [
+            $data = [
                 'title' => $request->getTitle(),
                 'price' => $request->getPrice(),
                 'context' => $request->getContext(),
                 'active' => $request->isActive() ? '1' : '0',
                 'cover' => $request->getCover() ? $request->getCover()->store(self::COVER_DIRECTORY) : null,
             ];
-            $this->productRepository->update($product, $productId);
+
+            /** @var Product $product */
+            $product = $this->productRepository->updateOrCreate($data, ['id' => $productId]);
+
+            $product->categories()->sync($request->getCategoriesIds());
+
             return redirect()->route('admin.products.index')
-                ->with('success', 'Product updated successfully');
+                ->with('status', 'Product updated successfully');
         } catch (\Exception $exception) {
             return redirect()
                 ->route('admin.products.edit', $this->productRepository->find($productId))

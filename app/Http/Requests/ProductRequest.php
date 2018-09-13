@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\UploadedFile;
+
 
 /**
  * Class ProductRequest
@@ -32,27 +33,24 @@ class ProductRequest extends FormRequest
     {
         return [
             'title' => 'required|min:3|max:191|string',
+            'context' => 'required',
             'cover' => 'nullable|image|max:2048|min:20|dimensions:min_width:50,min-height=100',
-            'context' => 'required|min:3|max:5000',
             'price' => 'required',
             'active' => 'boolean',
+            'category' => [
+                'nullable',
+                'array',
+                'exists:categories,id',
+            ],
         ];
     }
 
     /**
-     * @return UploadedFile|null
+     * @return null|string
      */
-    public function getCover(): ?UploadedFile
+    public function getTitle(): ? string
     {
-        return $this->file('cover');
-    }
-
-    /**
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
+        return $this->input('title');
     }
 
     /**
@@ -60,7 +58,15 @@ class ProductRequest extends FormRequest
      */
     public function getContext(): string
     {
-        return $this->context;
+        return $this->input('context');
+    }
+
+    /**
+     * @return UploadedFile|null
+     */
+    public function getCover(): ? UploadedFile
+    {
+        return $this->file('cover');
     }
 
     /**
@@ -68,7 +74,15 @@ class ProductRequest extends FormRequest
      */
     public function getPrice(): string
     {
-        return $this->price;
+        return $this->input('price');
+    }
+
+    /**
+     * @return array
+     */
+    public function getCategoriesIds(): array
+    {
+        return $this->input('category', []);
     }
 
     /**
@@ -76,6 +90,6 @@ class ProductRequest extends FormRequest
      */
     public function isActive(): bool
     {
-        return (bool)$this->active;
+        return (bool)$this->input('active');
     }
 }
