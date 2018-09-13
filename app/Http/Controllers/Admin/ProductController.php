@@ -89,21 +89,23 @@ class ProductController extends Controller
      * @param  \App\Product $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product): View
     {
         return view('admin.products.edit', compact('product'));
     }
+
 
     /**
      * @param ProductRequest $request
      * @param int $productId
      * @return RedirectResponse
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
-    public function update(ProductRequest $request, int $productId)
+    public function update(ProductRequest $request, int $productId): RedirectResponse
     {
         try {
             $product = [
-                'title' => $request->getTitle(),
+                'titl' => $request->getTitle(),
                 'price' => $request->getPrice(),
                 'context' => $request->getContext(),
                 'active' => $request->isActive() ? '1' : '0',
@@ -113,7 +115,9 @@ class ProductController extends Controller
             return redirect()->route('admin.products.index')
                 ->with('success', 'Product updated successfully');
         } catch (\Exception $exception) {
-
+            return redirect()
+                ->route('admin.products.edit', $this->productRepository->find($productId))
+                ->with('error', $exception->getMessage());
         }
     }
 }
