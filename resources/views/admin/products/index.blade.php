@@ -5,7 +5,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        Categories
+                        Products
                         <a class="btn btn-sm btn-outline-dark" href="{{ route('admin.products.create') }}">{{ __('New') }}</a>
                     </div>
                     <div class="card-body">
